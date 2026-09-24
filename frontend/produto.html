@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="container mt-4">
+
+    <h1>Produtos</h1>
+
+    <form id="formProduto">
+
+        <input type="hidden" id="idProd">
+
+        <div class="mb-3">
+            <label class="form-label">Nome</label>
+            <input
+                type="text"
+                id="txtNomeProd"
+                class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Preço</label>
+            <input
+                type="number"
+                step="0.01"
+                id="txtPreco"
+                class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Categoria</label>
+
+            <select
+                id="cmbCategoria"
+                class="form-select">
+            </select>
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+            Salvar
+        </button>
+
+    </form>
+
+    <hr>
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody id="listaProdutos">
+
+        </tbody>
+
+    </table>
+    
+</body>
+
+</html>
