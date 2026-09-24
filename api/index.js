@@ -97,6 +97,32 @@ api.put("/category/:idCat", (req, res) => {
 
 });
 
+api.delete("/category/:idCat", (req, res) => {
+
+    const idCategoria = req.params.idCat;
+
+    conn("categoria")
+        .where("id", idCategoria)
+        .delete()
+        .then(dados => {
+
+            if (!dados) {
+                return res.status(404).json({
+                    resposta: "Categoria não encontrada"
+                });
+            }
+
+            res.status(200).json({
+                resposta: "Categoria excluída com sucesso"
+            });
+
+        })
+        .catch(erro => {
+            res.status(500).json(erro);
+        });
+
+});
+
 api.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
