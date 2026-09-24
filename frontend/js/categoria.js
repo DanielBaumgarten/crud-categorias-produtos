@@ -3,6 +3,9 @@ const URL = "http://localhost:8001";
 const endPointCategoria = URL + "/category";
 
 const listaCategorias = document.getElementById("listaCategorias");
+const formulario = document.getElementById("formCategoria");
+const campoId = document.getElementById("idCat");
+const campoNome = document.getElementById("txtNome");
 
 async function loadCategorias() {
 
@@ -58,3 +61,57 @@ async function loadCategorias() {
 }
 
 loadCategorias();
+
+async function addCategoria(categoria) {
+
+    try {
+
+        const resposta = await fetch(
+            endPointCategoria,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(categoria)
+            }
+        );
+
+        if (resposta.ok) {
+
+            alert("Categoria cadastrada com sucesso!");
+
+            campoNome.value = "";
+
+            loadCategorias();
+
+        } else {
+
+            alert("Erro ao cadastrar categoria");
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao cadastrar categoria");
+
+    }
+
+}
+
+formulario.addEventListener(
+    "submit",
+    async function(evento) {
+
+        evento.preventDefault();
+
+        const categoria = {
+            nome: campoNome.value
+        };
+
+        await addCategoria(categoria);
+
+    }
+);
