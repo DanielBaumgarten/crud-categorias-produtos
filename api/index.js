@@ -37,6 +37,22 @@ api.get("/category", (req, res) => {
 
 });
 
+api.get("/category/:idCat", (req, res) => {
+
+    const id = req.params.idCat;
+
+    conn("categoria")
+        .where("id", id)
+        .first()
+        .then(dados => {
+            res.json(dados);
+        })
+        .catch(erro => {
+            res.status(500).json(erro);
+        });
+
+});
+
 api.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
