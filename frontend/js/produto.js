@@ -82,15 +82,21 @@ async function loadProdutos() {
                     <td>
 
                         <button
-                            class="btn btn-info">
+                            class="btn btn-info"
+                            onclick="preencherFormProduto(
+                            '${prod.id}',
+                            '${prod.nome}',
+                            '${prod.preco}',
+                            '${prod.codCategoria}'
+                            )">
                             Editar
                         </button>
 
                         <button
-                            class="btn btn-danger">
+                            class="btn btn-danger"
+                            onclick="excluirProduto(${prod.id})">
                             Excluir
                         </button>
-
                     </td>
 
                 </tr>
@@ -151,11 +157,54 @@ async function addProduto(produto) {
 
 }
 
+async function editarProduto(idProd, produto) {
+
+    try {
+
+        const resposta = await fetch(
+            `${endPointProduto}/${idProd}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(produto)
+            }
+        );
+
+        if (resposta.ok) {
+
+            alert("Produto atualizado com sucesso!");
+
+            campoId.value = "";
+            campoNome.value = "";
+            campoPreco.value = "";
+
+            loadProdutos();
+
+        } else {
+
+            alert("Erro ao atualizar produto");
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao atualizar produto");
+
+    }
+
+}
+
 formulario.addEventListener(
     "submit",
     async function(evento) {
 
         evento.preventDefault();
+
+        const idProd = campoId.value;
 
         const produto = {
 
@@ -171,7 +220,20 @@ formulario.addEventListener(
 
         };
 
-        await addProduto(produto);
+        if (idProd) {
+
+            await editarProduto(
+                idProd,
+                produto
+            );
+
+        } else {
+
+            await addProduto(
+                produto
+            );
+
+        }
 
     }
 );
@@ -214,5 +276,22 @@ async function excluirProduto(id) {
         alert("Erro ao excluir produto");
 
     }
+
+}
+
+function preencherFormProduto(
+    idProd,
+    nomeProd,
+    precoProd,
+    categoriaProd
+) {
+
+    campoId.value = idProd;
+
+    campoNome.value = nomeProd;
+
+    campoPreco.value = precoProd;
+
+    cmbCategoria.value = categoriaProd;
 
 }
