@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="container mt-4">
+
+    <h1>Categorias</h1>
+
+    <form id="formCategoria">
+
+        <input type="hidden" id="idCat">
+
+        <div class="input-group mb-3">
+
+            <span class="input-group-text">
+                Nome
+            </span>
+
+            <input
+                type="text"
+                id="txtNome"
+                class="form-control"
+                placeholder="Digite o nome da categoria">
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+            Salvar
+        </button>
+
+    </form>
+
+    <hr>
+
+    <table class="table table-striped table-hover">
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="listaCategorias">
+
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>
