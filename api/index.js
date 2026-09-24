@@ -71,6 +71,32 @@ api.post("/category", (req, res) => {
 
 });
 
+api.put("/category/:idCat", (req, res) => {
+
+    const idCategoria = req.params.idCat;
+
+    conn("categoria")
+        .where("id", idCategoria)
+        .update(req.body)
+        .then(dados => {
+
+            if (!dados) {
+                return res.status(404).json({
+                    resposta: "Categoria não encontrada"
+                });
+            }
+
+            res.status(200).json({
+                resposta: "Categoria atualizada com sucesso"
+            });
+
+        })
+        .catch(erro => {
+            res.status(500).json(erro);
+        });
+
+});
+
 api.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
