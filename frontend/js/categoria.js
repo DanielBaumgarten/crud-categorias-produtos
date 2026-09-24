@@ -41,7 +41,8 @@ async function loadCategorias() {
                         </button>
 
                         <button
-                            class="btn btn-danger">
+                            class="btn btn-danger"
+                            onclick="excluirCategoria(${cat.id})">
                             Excluir
                         </button>
 
@@ -115,3 +116,44 @@ formulario.addEventListener(
 
     }
 );
+
+async function excluirCategoria(id) {
+
+    const confirma = confirm(
+        "Confirma a exclusão desta categoria?"
+    );
+
+    if (!confirma) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            `${endPointCategoria}/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        if (resposta.ok) {
+
+            alert("Categoria excluída com sucesso!");
+
+            loadCategorias();
+
+        } else {
+
+            alert("Erro ao excluir categoria");
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao excluir categoria");
+
+    }
+
+}
