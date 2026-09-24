@@ -110,3 +110,68 @@ async function loadProdutos() {
 
 loadComboCategorias();
 loadProdutos();
+
+async function addProduto(produto) {
+
+    try {
+
+        const resposta = await fetch(
+            endPointProduto,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(produto)
+            }
+        );
+
+        if (resposta.ok) {
+
+            alert("Produto cadastrado com sucesso!");
+
+            campoNome.value = "";
+            campoPreco.value = "";
+
+            loadProdutos();
+
+        } else {
+
+            alert("Erro ao cadastrar produto");
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao cadastrar produto");
+
+    }
+
+}
+
+formulario.addEventListener(
+    "submit",
+    async function(evento) {
+
+        evento.preventDefault();
+
+        const produto = {
+
+            nome: campoNome.value,
+
+            preco: parseFloat(
+                campoPreco.value
+            ),
+
+            codCategoria: parseInt(
+                cmbCategoria.value
+            )
+
+        };
+
+        await addProduto(produto);
+
+    }
+);
