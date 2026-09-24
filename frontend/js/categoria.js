@@ -36,7 +36,8 @@ async function loadCategorias() {
                     <td>
 
                         <button
-                            class="btn btn-info">
+                            class="btn btn-info"
+                            onclick="preencherForm('${cat.id}', '${cat.nome}')">
                             Editar
                         </button>
 
@@ -102,17 +103,67 @@ async function addCategoria(categoria) {
 
 }
 
+async function editarCategoria(idCat, categoria) {
+
+    try {
+
+        const resposta = await fetch(
+            `${endPointCategoria}/${idCat}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(categoria)
+            }
+        );
+
+        if (resposta.ok) {
+
+            alert("Categoria atualizada com sucesso!");
+
+            campoId.value = "";
+            campoNome.value = "";
+
+            loadCategorias();
+
+        } else {
+
+            alert("Erro ao atualizar categoria");
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao atualizar categoria");
+
+    }
+
+}
+
 formulario.addEventListener(
     "submit",
     async function(evento) {
 
         evento.preventDefault();
 
+        const idCat = campoId.value;
+
         const categoria = {
             nome: campoNome.value
         };
 
-        await addCategoria(categoria);
+        if (idCat) {
+
+            await editarCategoria(idCat, categoria);
+
+        } else {
+
+            await addCategoria(categoria);
+
+        }
 
     }
 );
@@ -155,5 +206,13 @@ async function excluirCategoria(id) {
         alert("Erro ao excluir categoria");
 
     }
+
+}
+
+function preencherForm(idCat, nomeCat) {
+
+    campoId.value = idCat;
+
+    campoNome.value = nomeCat;
 
 }
