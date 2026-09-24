@@ -175,3 +175,44 @@ formulario.addEventListener(
 
     }
 );
+
+async function excluirProduto(id) {
+
+    const confirma = confirm(
+        "Confirma a exclusão deste produto?"
+    );
+
+    if (!confirma) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            `${endPointProduto}/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        if (resposta.ok) {
+
+            alert("Produto excluído com sucesso!");
+
+            loadProdutos();
+
+        } else {
+
+            alert("Erro ao excluir produto");
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao excluir produto");
+
+    }
+
+}
