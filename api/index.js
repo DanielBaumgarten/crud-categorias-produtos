@@ -53,6 +53,24 @@ api.get("/category/:idCat", (req, res) => {
 
 });
 
+api.post("/category", (req, res) => {
+
+    conn("categoria")
+        .insert(req.body)
+        .then(dados => {
+
+            res.status(201).json({
+                resposta: "Categoria cadastrada com sucesso",
+                id: dados[0]
+            });
+
+        })
+        .catch(erro => {
+            res.status(500).json(erro);
+        });
+
+});
+
 api.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
